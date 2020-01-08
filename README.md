@@ -8,6 +8,8 @@ This utility parses your Terraform, finds `aws_iam_policy_document` elements, ge
 
 It stubs any Terraform interpolations `${...}` so  they can be evaluated by Parliament as valid JSON.
 
+![Example run](/doc/img/parliament-test-run.png)
+
 ## NOTE
 
 Currently not fit to be used as a GitHub action as intended, since --recursive not yet implemented
