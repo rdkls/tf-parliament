@@ -8,21 +8,23 @@ This utility parses your Terraform, finds `aws_iam_policy_document` elements, ge
 
 It stubs any Terraform interpolations `${...}` so  they can be evaluated by Parliament as valid JSON.
 
-# Usage
+## Usage
 
-## Docker
+### Docker
 
 Use `/github/workspace/` to mount the directory containing the Terraform, since this image is intended to run as a GitHub action:
 
 Intention|Command
 -|-
-Run on the entire directory|`docker run --rm -ti -v (pwd):/github/workspace/ tf-parliament:latest`
-Run on one file|`docker run --rm -ti -v (pwd):/github/workspace/ tf-parliament:latest iam.tf`
-Run on some TF files only|`docker run --rm -ti -v (pwd):/github/workspace/ tf-parliament:latest 'iam-*.tf'`
+Run on the entire directory|`docker run --rm -ti -v (pwd):/github/workspace/ rdkls/tf-parliament`
+Run on one file|`docker run --rm -ti -v (pwd):/github/workspace/ rdkls/tf-parliament iam.tf`
+Run on some TF files only|`docker run --rm -ti -v (pwd):/github/workspace/ rdkls/tf-parliament 'iam-*.tf'`
 
-Note quotes around the argument in the last example, to avoid your shell expanding the wildcard before passing to docker.
+Notes
+- These examples use fish shell `(pwd)`, in bash switch that to ``` `pwd` ```
+- Quotes around the argument in the last example, to avoid your shell expanding the wildcard before passing to docker.
 
-## Native
+### Native
 
 `pip install -r requirements.txt`
 
@@ -30,7 +32,7 @@ Note quotes around the argument in the last example, to avoid your shell expandi
 
 (also supports wildcards & directories per Docker method)
 
-# Requirements
+## Requirements
 
 - Docker
 - Terraform Files v0.12+
