@@ -18,6 +18,8 @@ Currently not fit to be used as a GitHub action as intended, since --recursive n
 
 ### Docker
 
+[DockerHub Repo](https://hub.docker.com/repository/docker/rdkls/tf-parliament)
+
 Use `/github/workspace/` to mount the directory containing the Terraform, since this image is intended to run as a GitHub action:
 
 Intention|Command
