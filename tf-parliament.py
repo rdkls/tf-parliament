@@ -73,7 +73,8 @@ for filename in args.filename_list:
             for statement_data in policy_data['aws_iam_policy_document'][policy_name]['statement']:
                 # Don't check assume role policies; these will have spurious findings for
                 # "Statement contains neither Resource nor NotResource"
-                if statement_data.get('actions')[0] == ['sts:AssumeRole']:
+                actions = statement_data.get('actions')[0]
+                if actions==['sts:AssumeRole'] or actions==['sts:AssumeRoleWithSAML']:
                     continue
 
                 statement = {}
