@@ -10,9 +10,11 @@ It stubs any Terraform interpolations `${...}` so  they can be evaluated by Parl
 
 ![Example run](/doc/img/parliament-test-run.png)
 
-## NOTE
+## Issues
 
-Currently not fit to be used as a GitHub action as intended, since --recursive not yet implemented
+- Sometimes the interpolation stubbing (e.g. "Replace all ${...} in a Resource with *") results in invalid values; needs to be more sophisticated than current regex replace
+- No unit tests :(
+- Currently not fit to be used as a GitHub action (as was my plan) since --recursive not yet implemented
 
 ## Usage
 
