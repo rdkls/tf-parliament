@@ -45,4 +45,4 @@ Notes
 ## Requirements
 
 - Docker
-- Terraform Files v0.12+
+- Terraform Files v0.12+ (though v0.11 should work too)
