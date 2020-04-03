@@ -88,15 +88,17 @@ def validate_file(filename):
     # Validate data.aws_iam_policy_document
     for policy_document in filter(lambda x: x.get('aws_iam_policy_document', None), tf.get('data', [])):
         iam_statements = []
-        policy_name = list(policy_document['aws_iam_policy_document'].keys())[0]
-        for statement_data in policy_document['aws_iam_policy_document'][policy_name]['statement']:
-            # Don't check assume role policies; these will have spurious findings for
-            # "Statement contains neither Resource nor NotResource"
-            actions = statement_data.get('actions')[0]
-            if actions == ['sts:AssumeRole'] or actions == ['sts:AssumeRoleWithSAML']:
-                continue
 
-            iam_statements.append(mock_iam_statement_from_tf(statement_data))
+        for policy_name, policy in policy_document['aws_iam_policy_document'].items():
+            if 'statement' in policy:
+                for statement_data in policy['statement']:
+                    # Don't check assume role policies; these will have spurious findings for
+                    # "Statement contains neither Resource nor NotResource"
+                    actions = statement_data.get('actions')[0]
+                    if actions == ['sts:AssumeRole'] or actions == ['sts:AssumeRoleWithSAML']:
+                        continue
+
+                    iam_statements.append(mock_iam_statement_from_tf(statement_data))
 
         policy_string = policy_template.format(iam_statements=json.dumps(iam_statements))
         findings += parliament.analyze_policy_string(policy_string).findings
