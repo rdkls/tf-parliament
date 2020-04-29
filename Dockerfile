@@ -7,3 +7,4 @@ COPY * /bin/
 WORKDIR /github/workspace/
 ENTRYPOINT ["/bin/tf-parliament.py"]
 CMD ["."]
+
