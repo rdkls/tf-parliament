@@ -6,6 +6,7 @@ import os
 import re
 import json
 import parliament
+from parliament.cli import is_finding_filtered
 import sys
 
 statement_template = """{{
@@ -118,6 +119,8 @@ if '__main__' == __name__:
     parser.add_argument('filename_list', nargs='+')
     parser.add_argument('-q', '--quiet', action='store_true', default=False, help="Quiet mode - only print if policy errors")
     parser.add_argument('-v', '--verbose', action='store_true', default=False)
+    parser.add_argument('-c', '--config', action='store', required=False)
+    parser.add_argument('--config-is-optional', action='store_true', default=False)
     args = parser.parse_args()
 
     # Bool to indicate if any findings, for all files - will be used for exit code
@@ -134,10 +137,25 @@ if '__main__' == __name__:
             if not filename.endswith('.tf'):
                 continue
 
+            print("Checking {}".format(filename))
             findings = validate_file(filename)
-            if findings:
+            if args.config:
+                try:
+                    parliament.override_config(args.config)
+                except FileNotFoundError as e:
+                    if args.config_is_optional:
+                        print("Config file {} not found. Ignoring.".format(args.config))
+                    else:
+                        raise e
+
+            filtered_findings = []
+            for finding in findings:
+                finding = parliament.enhance_finding(finding)
+                if not is_finding_filtered(finding):
+                    filtered_findings.append(finding)
+            if len(filtered_findings) > 0:
                 print(f"{bcolors.FAIL}{filename}{bcolors.ENDC}")
-                for f in findings:
+                for f in filtered_findings:
                     print(format_finding(f))
                     findings_found = True
                 print()
