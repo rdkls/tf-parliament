@@ -15,6 +15,7 @@ It stubs any Terraform interpolations `${...}` so  they can be evaluated by Parl
 - Sometimes the interpolation stubbing (e.g. "Replace all ${...} in a Resource with *") results in invalid values; needs to be more sophisticated than current regex replace
 - No unit tests :(
 - Currently not fit to be used as a GitHub action (as was my plan) since --recursive not yet implemented
+- You will receive `RESOURCE_MISMATCH` if you have a policy with action `Get*` and resource ending in `/*` (referring to objects in a bucket), since `s3:Get*` includes some permissions which are bucket-level, not object-level. I have tried allowing you to ignore this by implementing config override per [Parliament doco](https://github.com/duo-labs/parliament#custom-config-file), and calling [parliament.override_config()](https://github.com/duo-labs/parliament/blob/master/parliament/cli.py#L327), to no avail
 
 ## Usage
 
