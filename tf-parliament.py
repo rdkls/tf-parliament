@@ -108,14 +108,14 @@ def validate_file(filename):
         findings += parliament.analyze_policy_string(policy_string).findings
 
     # Validate resource.aws_iam_policy
-    for policy in filter(lambda x: x.get('aws_iam_policy', None), tf.get('resource', [])):
-        try:
-            policy_string = policy['aws_iam_policy']['policy']['policy'][0]
-        except KeyError:
-            continue
-
-        findings += parliament.analyze_policy_string(policy_string).findings
-
+    for policy_resource in filter(lambda x: x.get('aws_iam_policy', None), tf.get('resource', [])):
+        for policy_name, policy in policy_resource['aws_iam_policy'].items():
+            try:
+                policy_string = policy['policy'][0]
+                policy_string = policy_string.replace('\\"', '"')
+            except KeyError:
+                continue
+            findings += parliament.analyze_policy_string(policy_string).findings
     return findings
 
 
