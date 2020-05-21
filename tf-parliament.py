@@ -2,6 +2,7 @@
 import argparse
 import glob
 import hcl2
+import lark
 import os
 import re
 import json
@@ -80,8 +81,11 @@ def mock_iam_statement_from_tf(statement_data):
 
 
 def validate_file(filename):
-    with(open(filename, 'r')) as file:
-        tf = hcl2.load(file)
+    try:
+        with(open(filename, 'r')) as file:
+            tf = hcl2.load(file)
+    except lark.exceptions.UnexpectedToken as e:
+        return [parliament.finding.Finding("Failed to parse file", str(e), filename)]
 
     findings = []
 
