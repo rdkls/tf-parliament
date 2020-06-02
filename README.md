@@ -10,6 +10,21 @@ It stubs any Terraform interpolations `${...}` so  they can be evaluated by Parl
 
 ![Example run](/doc/img/parliament-test-run.png)
 
+## Terraform Resource Support
+
+Resource Type | Supported?
+-|-
+`aws_iam_policy` | **Yes**  only inline policy not file()
+`aws_iam_policy_document` | **Yes**
+`aws_iam_user_policy` | No
+`aws_iam_group_policy` | No
+`aws_iam_role_policy` | No
+`aws_s3_bucket_policy` | No
+`aws_[ecr\|efs\|iot\|media_store_container\|organizations]*_policy` | No
+`data.template_file` | No
+
+The unsupported resource types should be pretty easy to add, if anyone feels a PR coming on :)
+
 ## Issues
 
 - Sometimes the interpolation stubbing (e.g. "Replace all ${...} in a Resource with *") results in invalid values; needs to be more sophisticated than current regex replace
