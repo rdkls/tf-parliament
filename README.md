@@ -38,7 +38,7 @@ The unsupported resource types should be pretty easy to add, if anyone feels a P
 
 ### Docker
 
-[DockerHub Repo](https://hub.docker.com/repository/docker/rdkls/tf-parliament)
+[DockerHub Repo](https://hub.docker.com/r/rdkls/tf-parliament)
 
 Use `/github/workspace/` to mount the directory containing the Terraform, since this image is intended to run as a GitHub action:
 
