@@ -22,6 +22,7 @@ policy_template = """{{
 }}"""
 
 field_mappings = [
+    {'tf_key': 'sid', 'iam_key': 'Sid', 'mock_value': ''},
     {'tf_key': 'effect', 'iam_key': 'Effect', 'mock_value': 'Allow'},
     {'tf_key': 'actions', 'iam_key': 'Action', 'mock_value': '*'},
     {'tf_key': 'not_actions', 'iam_key': 'NotAction', 'mock_value': '*'},
