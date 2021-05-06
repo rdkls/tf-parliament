@@ -7,7 +7,7 @@ lark-parser==0.7.8
 parliament==0.4.14
 python-dateutil==2.8.1
 python-hcl2==0.2.2
-PyYAML==5.3.1
+PyYAML==5.4
 s3transfer==0.3.3
 six==1.14.0
 urllib3==1.25.9
